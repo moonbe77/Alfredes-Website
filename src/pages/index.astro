@@ -11,6 +11,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 				id="hero-video"
 				muted
 				loop
+				playsinline
 				poster="/assets/hero_xl.jpg"
 				preload="none"
 				class="absolute inset-0 w-full h-full object-cover"
@@ -90,11 +91,9 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 			function loadVideo(): Promise<void> {
 				if (videoLoaded) return Promise.resolve();
 				videoLoaded = true;
-				return fetch(videoSrc)
-					.then((res) => res.blob())
-					.then((blob) => {
-						video.src = URL.createObjectURL(blob);
-					});
+				video.src = videoSrc;
+				video.load();
+				return Promise.resolve();
 			}
 
 			function showPlayIcon() {
